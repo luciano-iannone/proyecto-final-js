@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const botonesAgregarAlCarrito = document.querySelectorAll('button[type="button"]');
     const botonCarrito = document.querySelector('.carritoCompras');
-    const botonCerrarCarrito = document.querySelector('#btnCerrarCarrito');
-    const cartOverlay = document.querySelector('#cart-overlay');
-    const cartItemsContainer = document.querySelector('#cart-items-container');
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     botonesAgregarAlCarrito.forEach((boton, index) => {
@@ -18,6 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
             cantidad: 1,
         };
 
+    function vaciarCarrito() {
+    carrito = [];
+    actualizarInterfazCarrito();
+    guardarCarritoEnLocalStorage();
+}
+
+
+document.addEventListener('click', event => {
+    if (event.target.classList.contains('vaciar-carrito')) {
+        vaciarCarrito();
+    }
+});
         const indiceProductoExistente = carrito.findIndex(item => item.nombre === selectedItem.nombre);
 
         if (indiceProductoExistente !== -1) {
@@ -36,44 +45,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function actualizarInterfazCarrito() {
-        const cartItemsList = document.createElement('ul');
-        cartItemsList.id = 'cart-items-list';
-        carrito.forEach((item, index) => {
-            const cartItem = document.createElement('li');
-            cartItem.innerHTML = `
-          <img src="${item.imagen}" alt="${item.nombre}">
-          <span>${item.nombre} - $${item.precio.toFixed(2)} x ${item.cantidad}</span>
-          <button class="btnEliminar" data-index="${index}">Eliminar</button>
+        const listaCarrito = document.createElement('ul');
+        carrito.forEach(item => {
+            const elementoLista = document.createElement('li');
+            elementoLista.innerHTML = `
+            <img src="${item.imagen}" alt="${item.nombre}">
+            <span>${item.nombre} - $${item.precio.toFixed(2)} x ${item.cantidad}</span>
         `;
-            cartItemsList.appendChild(cartItem);
+            listaCarrito.appendChild(elementoLista);
         });
 
-        cartItemsContainer.innerHTML = '';
-        cartItemsContainer.appendChild(cartItemsList);
-
-        const btnEliminar = document.querySelectorAll('.btnEliminar');
-        btnEliminar.forEach(btn => {
-            btn.addEventListener('click', e => eliminarDelCarrito(e));
-        });
+        const contenedorCarrito = document.querySelector('.carritoCompras');
+        contenedorCarrito.innerHTML = '';
+        contenedorCarrito.appendChild(listaCarrito);
     }
 
     function guardarCarritoEnLocalStorage() {
         localStorage.setItem('carrito', JSON.stringify(carrito));
     }
 
-    function eliminarDelCarrito(event) {
-        const index = event.target.dataset.index;
-        carrito.splice(index, 1);
-        actualizarInterfazCarrito();
-        guardarCarritoEnLocalStorage();
-    }
+    botonCarrito.addEventListener('click', () => {
+        alert('Carrito de Compras:\n\n' + JSON.stringify(carrito, null, 2));
+    });
 
-    function toggleCarritoOverlay() {
-        cartOverlay.classList.toggle('active');
-    }
-
-    botonCarrito.addEventListener('click', toggleCarritoOverlay);
-    botonCerrarCarrito.addEventListener('click', toggleCarritoOverlay);
-
+    // Actualizar la interfaz del carrito al cargar la página
     actualizarInterfazCarrito();
 });
