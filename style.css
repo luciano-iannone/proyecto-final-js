@@ -1,0 +1,113 @@
+/* Body styles */
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+#header {
+    background-color: #333333;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 42px;
+    margin: 0;
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* Navigation styles */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Main styles */
+main {
+    padding: 20px;
+}
+
+/* Mouse items styles */
+.destacados {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.destacados div {
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.destacados img {
+    width: 350px;
+    height: 350px;
+    border-radius: 5px;
+}
+
+.destacados h2 {
+    font-size: 20px;
+    margin-top: 10px;
+}   
+
+.destacados h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.destacados button {
+    background-color: #ff5500;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.destacados button:hover {
+    background-color: #ff4400;
+}
+
+/* Cart styles */
+.carritoCompras {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ff5500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.carritoCompras img {
+    width: 30px;
+    height: 30px;
+}
+
+.carritoCompras:hover {
+    background-color: #ff4400;
+}
+
+footer{
+    background-color: rgb(102, 102, 102);
+    padding: 30px;
+}
