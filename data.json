@@ -1,0 +1,34 @@
+{
+    "productos": [
+        {
+            "nombre": "mouse logitech blanco",
+            "imagen": "./img/logi balanco.jpg",
+            "precio": 5600
+        },
+        {
+            "nombre": "mouse logitech",
+            "imagen": "./img/logitech.jpg",
+            "precio": 5500
+        },
+        {
+            "nombre": "mouse hyperX",
+            "imagen": "./img/hyperx.webp",
+            "precio": 6600
+        },
+        {
+            "nombre": "mouse razer",
+            "imagen": "./img/razer.jpg",
+            "precio": 7600
+        },
+        {
+            "nombre": "mouse corsair",
+            "imagen": "./img/corsair mouse.jpg",
+            "precio": 6300
+        },
+        {
+            "nombre": "mouse redragon",
+            "imagen": "./img/redragon.jpg",
+            "precio": 4100
+        }
+    ]
+}
