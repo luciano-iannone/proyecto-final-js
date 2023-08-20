@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const botonesAgregarAlCarrito = document.querySelectorAll('button[type="button"]');
     const botonCarrito = document.querySelector('.carritoCompras');
+    const botonVaciarCarrito = document.querySelector('.vaciar-carrito');
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     botonesAgregarAlCarrito.forEach((boton, index) => {
@@ -15,18 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
             cantidad: 1,
         };
 
-    function vaciarCarrito() {
-    carrito = [];
-    actualizarInterfazCarrito();
-    guardarCarritoEnLocalStorage();
-}
-
-
-document.addEventListener('click', event => {
-    if (event.target.classList.contains('vaciar-carrito')) {
-        vaciarCarrito();
-    }
-});
         const indiceProductoExistente = carrito.findIndex(item => item.nombre === selectedItem.nombre);
 
         if (indiceProductoExistente !== -1) {
@@ -37,7 +26,31 @@ document.addEventListener('click', event => {
 
         actualizarInterfazCarrito();
         guardarCarritoEnLocalStorage();
+
+        Swal.fire({
+            icon: 'success',
+            title: '¡Producto Agregado!',
+            text: `${selectedItem.nombre} se ha agregado al carrito.`,
+            confirmButtonText: 'Aceptar'
+        });
     }
+
+    function vaciarCarrito() {
+        carrito = [];
+        actualizarInterfazCarrito();
+        guardarCarritoEnLocalStorage();
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Carrito Vacío',
+            text: 'El carrito se ha vaciado.',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
+    botonVaciarCarrito.addEventListener('click', () => {
+        vaciarCarrito();
+    });
 
     function obtenerPrecio(index) {
         const preciosMouses = [5600, 5500, 6600, 7600, 6300, 4100];
@@ -49,9 +62,9 @@ document.addEventListener('click', event => {
         carrito.forEach(item => {
             const elementoLista = document.createElement('li');
             elementoLista.innerHTML = `
-            <img src="${item.imagen}" alt="${item.nombre}">
-            <span>${item.nombre} - $${item.precio.toFixed(2)} x ${item.cantidad}</span>
-        `;
+                <img src="${item.imagen}" alt="${item.nombre}">
+                <span>${item.nombre} - $${item.precio.toFixed(2)} x ${item.cantidad}</span>
+            `;
             listaCarrito.appendChild(elementoLista);
         });
 
@@ -65,9 +78,22 @@ document.addEventListener('click', event => {
     }
 
     botonCarrito.addEventListener('click', () => {
-        alert('Carrito de Compras:\n\n' + JSON.stringify(carrito, null, 2));
+        const contenidoHTML = carrito.map(item => `
+            <div>
+                <strong>Nombre:</strong> ${item.nombre} <br>
+                <strong>Cantidad:</strong> ${item.cantidad} <br>
+                <strong>Total:</strong> $${(item.precio * item.cantidad).toFixed(2)}
+            </div>
+            <hr>
+        `).join('');
+    
+        Swal.fire({
+            icon: 'info',
+            title: 'Carrito de Compras',
+            html: contenidoHTML,
+            confirmButtonText: 'Cerrar'
+        });
     });
 
-    // Actualizar la interfaz del carrito al cargar la página
     actualizarInterfazCarrito();
 });
